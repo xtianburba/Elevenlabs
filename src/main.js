@@ -13,9 +13,10 @@ const brandLogo = document.getElementById("brand-logo");
 const customWidgetLauncher = document.getElementById("custom-widget-launcher");
 const customWidgetAvatar = document.getElementById("custom-widget-avatar");
 const AUTH_FLAG = "demo_widget_authenticated";
+const baseUrl = import.meta.env.BASE_URL || "/";
 
 if (sessionStorage.getItem(AUTH_FLAG) !== "1") {
-  window.location.replace("/");
+  window.location.replace(baseUrl);
 }
 
 const srcImages = Object.entries(

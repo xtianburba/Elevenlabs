@@ -1,10 +1,12 @@
 const AUTH_FLAG = "demo_widget_authenticated";
+const baseUrl = import.meta.env.BASE_URL || "/";
+const landingUrl = new URL("landing.html", window.location.origin + baseUrl).toString();
 
 const expectedUser = import.meta.env.VITE_LOGIN_USERNAME || "";
 const expectedPassword = import.meta.env.VITE_LOGIN_PASSWORD || "";
 
 if (sessionStorage.getItem(AUTH_FLAG) === "1") {
-  window.location.replace("/landing.html");
+  window.location.replace(landingUrl);
 }
 
 const form = document.getElementById("login-form");
@@ -27,7 +29,7 @@ form.addEventListener("submit", (event) => {
 
   if (username === expectedUser && password === expectedPassword) {
     sessionStorage.setItem(AUTH_FLAG, "1");
-    window.location.replace("/landing.html");
+    window.location.replace(landingUrl);
     return;
   }
 
