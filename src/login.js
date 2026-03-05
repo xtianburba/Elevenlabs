@@ -1,6 +1,17 @@
 const AUTH_FLAG = "demo_widget_authenticated";
-const baseUrl = import.meta.env.BASE_URL || "/";
-const landingUrl = new URL("landing.html", window.location.origin + baseUrl).toString();
+
+function resolveAppBasePath() {
+  const envBase = import.meta.env.BASE_URL || "/";
+  if (envBase && envBase !== "/") return envBase;
+
+  // Fallback robusto para GitHub Pages: usa el primer segmento del path actual.
+  const [firstSegment] = window.location.pathname.split("/").filter(Boolean);
+  if (!firstSegment || firstSegment.endsWith(".html")) return "/";
+  return `/${firstSegment}/`;
+}
+
+const appBase = resolveAppBasePath();
+const landingUrl = new URL("landing.html", window.location.origin + appBase).toString();
 
 const expectedUser = import.meta.env.VITE_LOGIN_USERNAME || "";
 const expectedPassword = import.meta.env.VITE_LOGIN_PASSWORD || "";

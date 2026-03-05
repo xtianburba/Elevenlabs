@@ -13,10 +13,35 @@ const brandLogo = document.getElementById("brand-logo");
 const customWidgetLauncher = document.getElementById("custom-widget-launcher");
 const customWidgetAvatar = document.getElementById("custom-widget-avatar");
 const AUTH_FLAG = "demo_widget_authenticated";
-const baseUrl = import.meta.env.BASE_URL || "/";
+
+function resolveAppBasePath() {
+  const envBase = import.meta.env.BASE_URL || "/";
+  if (envBase && envBase !== "/") return envBase;
+
+  const [firstSegment] = window.location.pathname.split("/").filter(Boolean);
+  if (!firstSegment || firstSegment.endsWith(".html")) return "/";
+  return `/${firstSegment}/`;
+}
+
+const baseUrl = resolveAppBasePath();
 
 if (sessionStorage.getItem(AUTH_FLAG) !== "1") {
   window.location.replace(baseUrl);
+}
+
+function resolveAssetUrl(url) {
+  if (!url) return "";
+
+  const trimmed = url.trim();
+  const isExternal =
+    /^https?:\/\//i.test(trimmed) ||
+    trimmed.startsWith("//") ||
+    trimmed.startsWith("data:") ||
+    trimmed.startsWith("blob:");
+  if (isExternal) return trimmed;
+
+  const normalized = trimmed.startsWith("/") ? trimmed.slice(1) : trimmed;
+  return new URL(normalized, window.location.origin + baseUrl).toString();
 }
 
 const srcImages = Object.entries(
@@ -34,15 +59,14 @@ const cfg = {
   overrideFirstMessage: import.meta.env.VITE_ELEVENLABS_OVERRIDE_FIRST_MESSAGE || "",
   overridePrompt: import.meta.env.VITE_ELEVENLABS_OVERRIDE_PROMPT || "",
   overrideVoiceId: import.meta.env.VITE_ELEVENLABS_OVERRIDE_VOICE_ID || "",
-  avatarImageUrl:
+  avatarImageUrl: resolveAssetUrl(
     import.meta.env.VITE_ELEVENLABS_AVATAR_IMAGE_URL ||
-    "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif",
-  productImageUrl:
-    import.meta.env.VITE_PRODUCT_IMAGE_URL ||
-    "/images/producto-clarins.png",
-  logoImageUrl:
-    import.meta.env.VITE_BRAND_LOGO_URL ||
-    "/images/logo-perfumesclub.png",
+      "https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif"
+  ),
+  productImageUrl: resolveAssetUrl(
+    import.meta.env.VITE_PRODUCT_IMAGE_URL || "/images/producto-clarins.png"
+  ),
+  logoImageUrl: resolveAssetUrl(import.meta.env.VITE_BRAND_LOGO_URL || "/images/logo-perfumesclub.png"),
   brand: import.meta.env.VITE_PRODUCT_BRAND || "Clarins",
   userName: import.meta.env.VITE_USER_NAME || "Krystian",
   itemId: import.meta.env.VITE_PRODUCT_ITEM_ID || "68580"
@@ -360,14 +384,19 @@ async function initImages() {
     "68580"
   ]);
 
-  const logoCandidates = ["/images/logo-perfumesclub.png", "/images/logo.png", "/images/brand-logo.png"];
+  const logoCandidates = [
+    "/images/logo_perfumesclub.png",
+    "/images/logo-perfumesclub.png",
+    "/images/logo.png",
+    "/images/brand-logo.png"
+  ].map(resolveAssetUrl);
   const productCandidates = [
     "/images/198797.webp",
     "/images/producto-clarins.png",
     "/images/product.png",
     "/images/clarins.png",
     "/images/68580.png"
-  ];
+  ].map(resolveAssetUrl);
 
   const finalLogo = await resolveBestImage(
     cfg.logoImageUrl,
