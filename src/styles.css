@@ -19,6 +19,7 @@ body {
   font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
+  overflow: hidden;
 }
 
 .site-header {
@@ -39,16 +40,17 @@ body {
 }
 
 .page {
-  min-height: 100vh;
+  height: calc(100vh - 72px);
   display: grid;
   align-content: start;
   justify-content: center;
-  padding: 26px 16px 120px;
+  padding: 14px 16px 88px;
+  overflow: hidden;
 }
 
 .breadcrumbs {
   width: min(1120px, 100%);
-  margin: 2px auto 14px;
+  margin: 2px auto 10px;
   color: #7b818a;
   font-size: 0.86rem;
 }
@@ -58,18 +60,19 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 24px 24px 28px;
+  padding: 18px 18px 20px;
   display: grid;
-  gap: 30px;
+  gap: 20px;
   grid-template-columns: 0.95fr 1.05fr;
   box-shadow: 0 12px 35px rgba(10, 13, 20, 0.06);
+  max-height: calc(100vh - 165px);
 }
 
 .gallery {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  min-height: 520px;
+  min-height: 420px;
   border: 1px solid var(--border);
   background: #f2f3f5;
 }
@@ -235,8 +238,8 @@ h1 {
   position: fixed;
   right: 22px;
   bottom: 20px;
-  width: 64px;
-  height: 64px;
+  width: 86px;
+  height: 86px;
   border: none;
   border-radius: 50%;
   overflow: hidden;
@@ -259,9 +262,14 @@ h1 {
 }
 
 @media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+
   .product-card {
     grid-template-columns: 1fr;
     padding: 16px;
+    max-height: none;
   }
 
   .gallery {
@@ -275,7 +283,7 @@ h1 {
   .custom-widget-launcher {
     right: 14px;
     bottom: 14px;
-    width: 58px;
-    height: 58px;
+    width: 68px;
+    height: 68px;
   }
 }
