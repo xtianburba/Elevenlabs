@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clarins Double Serum - Demo Widget ElevenLabs</title>
+    <meta
+      name="description"
+      content="Landing de demo de producto con widget personalizado de ElevenLabs."
+    />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <img id="brand-logo" class="brand-logo" src="" alt="Perfume's Club" />
+      </div>
+    </header>
+
+    <main class="page">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        Perfume's Club / Clarins / Antiedad y Antiarrugas / Double Serum
+      </nav>
+
+      <section class="product-card">
+        <div class="gallery">
+          <span class="promo-chip">-49%</span>
+          <img id="product-image" class="product-image" src="" alt="Producto Clarins" />
+        </div>
+
+        <div class="product-info">
+          <p class="brand">Clarins</p>
+          <h1>DOUBLE SERUM concentrado antiedad</h1>
+          <p class="subtitle">Antiarrugas y antiedad · Página demo para IA recomendadora</p>
+          <p class="rating">4,7/5 · 157 valoraciones</p>
+          <div class="tag-row">
+            <span class="tag">No comedogénico</span>
+            <span class="tag">Ácido hialurónico</span>
+            <span class="tag">Todo tipo de piel</span>
+          </div>
+
+          <div class="sizes" id="size-selector"></div>
+
+          <div class="price-box">
+            <span class="price-label">Precio final</span>
+            <p class="price" id="selected-price">88,95 €</p>
+            <p class="price-hint" id="selected-reference-price">100 ml / 118,60 €</p>
+          </div>
+
+          <button id="talk-about-product" class="talk-btn" type="button">
+            Háblame sobre este producto
+          </button>
+
+          <p class="mini-note">
+            Este botón abre el widget de voz/chat y envía contexto del producto al agente.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <elevenlabs-convai
+      id="elevenlabs-widget"
+      class="widget-boot-hidden"
+      dismissible="true"
+      variant="compact"
+      action-text=""
+      start-call-text="Iniciar conversación"
+      end-call-text="Finalizar"
+      expand-text=""
+      listening-text="Te escucho..."
+      speaking-text="Estoy respondiendo..."
+      avatar-orb-color-1="#b2896b"
+      avatar-orb-color-2="#f0d7bf"
+      markdown-link-allowed-hosts="*"
+      markdown-link-include-www="true"
+      markdown-link-allow-http="true"
+      syntax-highlight-theme="light"
+    ></elevenlabs-convai>
+    <button id="custom-widget-launcher" class="custom-widget-launcher" type="button" aria-label="Abrir asistente">
+      <img id="custom-widget-avatar" alt="Asistente virtual" src="" />
+    </button>
+
+    <script type="module" src="/src/main.js"></script>
+    <script
+      src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+      async
+      type="text/javascript"
+    ></script>
+  </body>
+</html>
